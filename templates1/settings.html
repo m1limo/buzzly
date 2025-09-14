@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="max-width: 600px; margin-top: 30px; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 10px;">
+
+  <h2 style="margin-bottom: 20px;">⚙️ Settings</h2>
+
+  <form method="POST">
+
+    <!-- Dark Mode -->
+    <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <input type="checkbox" name="dark_mode" {% if dark_mode %}checked{% endif %}>
+      Enable Dark Mode
+    </label>
+
+    <!-- Text Size Option -->
+    <label for="font_size" style="display: block; margin-top: 20px;">Font Size:</label>
+    <select name="font_size" id="font_size" style="width: 100%; padding: 8px; border-radius: 5px;">
+      <option value="small" {% if font_size == 'small' %}selected{% endif %}>Small</option>
+      <option value="medium" {% if font_size == 'medium' %}selected{% endif %}>Medium</option>
+      <option value="large" {% if font_size == 'large' %}selected{% endif %}>Large</option>
+    </select>
+
+    <!-- High Contrast (Accessibility) -->
+    <label style="display: flex; align-items: center; gap: 10px; margin-top: 20px;">
+      <input type="checkbox" name="high_contrast" {% if high_contrast %}checked{% endif %}>
+      Enable High Contrast Mode
+    </label>
+
+    <!-- Theme Color -->
+    <label for="theme_color" style="display: block; margin-top: 20px;">Theme Color:</label>
+    <select name="theme_color" id="theme_color" style="width: 100%; padding: 8px; border-radius: 5px;">
+      <option value="default" {% if theme_color == 'default' %}selected{% endif %}>Default</option>
+      <option value="red" {% if theme_color == 'red' %}selected{% endif %}>Red</option>
+      <option value="green" {% if theme_color == 'green' %}selected{% endif %}>Green</option>
+      <option value="blue" {% if theme_color == 'blue' %}selected{% endif %}>Blue</option>
+    </select>
+
+    <!-- Save Button -->
+    <button type="submit" class="btn" style="margin-top: 30px;">💾 Save Settings</button>
+  </form>
+</div>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="max-width: 400px; margin: 60px auto; background: rgba(255,255,255,0.95); padding: 30px; border-radius: 10px; color: #333;">
+  <h2 style="text-align: center; color: crimson;">🔐 Admin Login</h2>
+
+  <form method="POST">
+    <label>Username</label>
+    <input type="text" name="username" required style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #ccc;">
+
+    <label>Password</label>
+    <input type="password" name="password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #ccc;">
+
+    <button type="submit" style="width: 100%; background: crimson; color: white; border: none; padding: 12px; border-radius: 6px;">Login</button>
+  </form>
+</div>
+
+{% endblock %}

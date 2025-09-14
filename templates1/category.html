@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="fade-in" style="padding: 40px 20px; text-align: center;">
+
+  <h1 style="color: #333; margin-bottom: 40px; font-size: 2rem;">🗂️ Explore News Categories</h1>
+
+  <div class="categories-container" style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    max-width: 960px;
+    margin: auto;
+  ">
+    {% for category in categories %}
+      <a href="{{ url_for('show_category', name=category|lower) }}" class="category-btn fade-in" style="
+        background-color: #1976d2;
+        color: #fff;
+        padding: 16px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      " onmouseover="this.style.transform='scale(1.05)'; this.style.backgroundColor='#1565c0';"
+         onmouseout="this.style.transform='scale(1)'; this.style.backgroundColor='#1976d2';">
+        {{ category }}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

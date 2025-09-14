@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="background: linear-gradient(to right, #fff8f0, #fdf6f9); padding: 30px 15px; min-height: 100vh;">
+  <div style="max-width: 1100px; margin: auto; background: rgba(255,255,255,0.95); padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 30px;">
+      <div style="display: flex; align-items: center;">
+        <img src="/static/logo.png" alt="Buzzly Icon" style="width: 40px; height: 40px; margin-right: 12px;">
+        <h1 style="font-size: 36px; font-family: 'Olive Village Vintage', 'Playfair Display', serif; color: olive;">Buzzly Kenya</h1>
+      </div>
+
+      <form method="get" style="display: flex; align-items: center; margin-top: 15px;">
+        <input type="text" name="search" placeholder="Search news..."
+               value="{{ request.args.get('search', '') }}"
+               style="padding: 8px 12px; border-radius: 20px; border: 1px solid #ccc; width: 240px;">
+        <button type="submit" style="margin-left: 10px; background: green; color: white; border: none; padding: 8px 16px; border-radius: 20px;">Search</button>
+      </form>
+    </div>
+
+    <form method="get" style="margin-bottom: 20px;">
+      <select name="category" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+        <option value="">All Categories</option>
+        {% for cat in categories %}
+          <option value="{{ cat }}" {% if request.args.get('category') == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+      </select>
+    </form>
+
+    {% if news %}
+      {% for article in news %}
+        <div style="display: flex; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px; overflow: hidden;">
+          {% if article.image %}
+            <img src="/static/uploads/{{ article.image }}" alt="{{ article.title }}" style="width: 160px; height: 120px; object-fit: cover;">
+          {% endif %}
+
+          <div style="padding: 16px; flex: 1;">
+            <h2 style="margin: 0; font-size: 20px; color: #222;">{{ article.title }}</h2>
+            <p style="margin: 6px 0; font-size: 14px; color: #555;">Category: {{ article.category }}</p>
+
+            <div style="margin-top: 10px;">
+              <a href="/article/{{ article.id }}" style="color: green; text-decoration: underline; margin-right: 15px;">📰 View Article</a>
+              {% if article.link %}
+                <a href="{{ article.link }}" class="text-blue-600 underline" target="_blank">🔗 Source</a>
+              {% endif %}
+
+              {% if session.get('is_admin') %}
+                <div style="margin-top: 8px;">
+                  <a href="/edit/{{ article.id }}" style="color: #007BFF; margin-right: 15px;">✏️ Edit</a>
+                  <a href="/delete/{{ article.id }}" style="color: crimson;">🗑 Delete</a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="text-align: center; color: #777;">No news found.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

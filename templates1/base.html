@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buzzly Kenya</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Theme Styles -->
+  <style>
+    :root {
+      --primary: {% if session.get('theme_color') == 'red' %}#d32f2f{% elif session.get('theme_color') == 'green' %}#388e3c{% elif session.get('theme_color') == 'blue' %}#1976d2{% else %}#444{% endif %};
+      --font-size: {% if session.get('font_size') == 'small' %}14px{% elif session.get('font_size') == 'large' %}20px{% else %}16px{% endif %};
+      --text-color: {% if session.get('dark_mode') %}#ffffff{% else %}#000000{% endif %};
+      --bg-color: {% if session.get('dark_mode') %}#121212{% else %}#ffffff{% endif %};
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      font-size: var(--font-size);
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      background-image: url('/static/bg.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      background: rgba(34, 139, 34, 0.9);
+    }
+
+    .left-section, .right-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .hamburger {
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      margin-right: 15px;
+    }
+
+    .site-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .search-bar input[type="text"] {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: none;
+      width: 240px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      transition: left 0.3s ease;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 14px 0;
+      color: #ffcc00;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar a:hover {
+      color: #fff;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+  </style>
+
+  {% if session.get('high_contrast') %}
+  <style>
+    body {
+      filter: contrast(150%);
+    }
+  </style>
+  {% endif %}
+</head>
+
+<body class="fade-in">
+
+  <header>
+    <div class="left-section">
+      <div class="hamburger" onclick="toggleSidebar()">&#9776;</div>
+    </div>
+    <div class="right-section">
+      <div class="site-title">Buzzly Kenya</div>
+      <div class="search-bar" style="margin-left: 15px;">
+        <form action="/search" method="GET">
+          <input type="text" name="query" placeholder="Search...">
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <a href="/settings">⚙️ Settings</a>
+    <a href="/">🏠 Home</a>
+    <a href="/categories">🗂️ Categories</a>
+    {% if session.get('is_admin') %}
+      <a href="/add">📝 Add Article</a>
+      <a href="/reset-password">🔄 Change Password</a>
+      <a href="/logout">🚪 Logout</a>
+    {% elif session.get('logged_in') %}
+      <a href="/logout">🚪 Logout</a>
+    {% else %}
+      <a href="/login">🔐 Login</a>
+    {% endif %}
+  </div>
+
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+  </script>
+  <script>
+  // Fade out on link click
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !link.hasAttribute('target')) {
+          e.preventDefault();
+          document.body.classList.remove('fade-in');
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = href;
+          }, 200);
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .fade-out {
+    animation: fadeOut 0.3s ease forwards;
+  }
+
+  @keyframes fadeOut {
+    to { opacity: 0; transform: translateY(10px); }
+  }
+</style>
+
+</body>
+</html>

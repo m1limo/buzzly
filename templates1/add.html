@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <h2>➕ Add a News Article</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label>Title</label>
+        <input type="text" name="title" required>
+
+        <label>Category</label>
+        <input type="text" name="category" required>
+
+        <label>Content</label>
+        <textarea name="content" rows="5" required></textarea>
+
+        <label>Link</label>
+        <input type="url" name="link" required>
+
+        <label>Image (Optional)</label>
+        <input type="file" id="image" name="image" accept="image/*" style="display: none;">
+        <button type="button" onclick="document.getElementById('image').click()" style="
+            background: #ffa500;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;">
+            📸 Choose Image
+        </button>
+        <span id="file-name" style="display: block; margin-top: 10px; color: #555;"></span>
+
+        <button type="submit">Add Article</button>
+    </form>
+
+    <a href="/">← Back to Home</a>
+</div>
+
+<script>
+  const imageInput = document.getElementById('image');
+  const fileNameDisplay = document.getElementById('file-name');
+
+  imageInput.addEventListener('change', function () {
+    if (this.files.length > 0) {
+      fileNameDisplay.textContent = `✔ Selected: ${this.files[0].name}`;
+    } else {
+      fileNameDisplay.textContent = '';
+    }
+  });
+</script>
+
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #fbd3e9, #bb377d);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    text-align: center;
+    color: #bb377d;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #444;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    background: #bb377d;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background: #9d2c69;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #bb377d;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+</style>
+
+{% endblock %}
+

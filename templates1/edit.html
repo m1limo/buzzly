@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="max-width: 600px; margin: 40px auto; background: rgba(255,255,255,0.95); padding: 30px; border-radius: 12px; color: #333;">
+  <h2 style="color: #333; text-align: center;">✏️ Edit Article</h2>
+
+  <form method="POST">
+    <label>Title</label>
+    <input type="text" name="title" value="{{ article.title }}" required style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 15px;">
+
+    <label>Category</label>
+    <input type="text" name="category" value="{{ article.category }}" required style="width: 100%; padding: 10px; margin-top: 6px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 15px;">
+
+    <label>Content</label>
+    <textarea name="content" rows="5" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 15px;">{{ article.content }}</textarea>
+
+    <label>Link</label>
+    <input type="url" name="link" value="{{ article.link }}" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 20px;">
+
+    <button type="submit" style="width: 100%; background: #007BFF; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 8px; cursor: pointer;">Save Changes</button>
+  </form>
+</div>
+
+{% endblock %}

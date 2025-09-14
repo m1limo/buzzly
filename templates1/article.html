@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="max-width: 720px; margin: auto; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 12px; color: #333;">
+
+<h2>{{ article.title }}</h2>
+<p><strong>Category:</strong> {{ article.category }}</p>
+
+{% if article.image %}
+  <img src="{{ url_for('static', filename='uploads/' ~ article.image) }}" style="max-width: 100%; border-radius: 8px; margin-top: 10px;">
+{% endif %}
+
+<p style="margin-top: 15px;">{{ article.content }}</p>
+
+{% if article.link %}
+  <p><a href="{{ article.link }}" target="_blank" style="color: #007BFF; text-decoration: underline;">🔗 Full Article</a></p>
+{% endif %}
+
+<form action="/like/{{ article.id }}" method="post" style="margin-top: 20px;">
+  <button type="submit" style="background: crimson; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">❤️ {{ article.likes }} Like</button>
+</form>
+
+<h3 style="margin-top: 30px;">💬 Comments</h3>
+<form method="POST" style="margin-bottom: 20px;">
+  <input type="text" name="name" placeholder="Your name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #ccc;">
+  <textarea name="message" placeholder="Your comment" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;"></textarea>
+  <button type="submit" style="margin-top: 10px; background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Post Comment</button>
+</form>
+
+<ul style="list-style-type: none; padding-left: 0;">
+  {% for comment in comments %}
+    <li style="margin-bottom: 10px; background: #f4f4f4; padding: 10px; border-radius: 6px;">
+      <strong>{{ comment.name }}</strong>: {{ comment.message }}<br>
+      <small style="color: #666;">({{ comment.created_at.strftime('%Y-%m-%d') }})</small>
+    </li>
+  {% endfor %}
+</ul>
+
+</div>
+
+{% endblock %}

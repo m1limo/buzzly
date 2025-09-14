@@ -1,0 +1,26 @@
+ {% extends "base.html" %}
+{% block content %}
+
+<div style="max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; color: #333;">
+  <h2>💬 Comments for: <em>{{ article.title }}</em></h2>
+
+  {% if comments %}
+    <ul style="list-style: none; padding: 0;">
+      {% for comment in comments %}
+      <li style="background: #f9f9f9; margin: 10px 0; padding: 15px; border-radius: 6px;">
+        <strong>{{ comment.name }}</strong>: {{ comment.message }}
+        <br><small>🗓 {{ comment.created_at.strftime('%Y-%m-%d') }}</small>
+
+        <form method="POST" style="margin-top: 10px;">
+          <input type="hidden" name="comment_id" value="{{ comment.id }}">
+          <button type="submit" style="background: crimson; color: white; border: none; padding: 5px 12px; border-radius: 6px;">Delete</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No comments found for this article.</p>
+  {% endif %}
+</div>
+
+{% endblock %}
