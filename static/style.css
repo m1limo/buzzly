@@ -37,7 +37,7 @@ body.dark-mode a {
 
 body.dark-mode form button {
   background-color: var(--button-bg);
-  color: #fff;
+  color: #232222;
 }
 
 body.dark-mode form button:hover {
